@@ -143,7 +143,7 @@ public class ForegroundService extends Service {
     }
 
     public void runHeadlessTask(Bundle bundle){
-        Intent service = new Intent(getApplicationContext(), ForegroundServiceTask.class);
+        final Intent service = new Intent(getApplicationContext(), ForegroundServiceTask.class);
         service.putExtras(bundle);
 
         int delay = (int)bundle.getDouble("delay");
