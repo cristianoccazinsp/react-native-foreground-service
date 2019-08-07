@@ -13,6 +13,7 @@ https://github.com/zo0r/react-native-push-notification/
     - Add to package.json
     "react-native-background-upload": "github:cristianoccazinsp/react-native-foreground-service",
 
+    -- NO LONGER NEEDED
     react-native link react-native-foreground-service
 
     Add/configure the following into the AndroidManifest.xml

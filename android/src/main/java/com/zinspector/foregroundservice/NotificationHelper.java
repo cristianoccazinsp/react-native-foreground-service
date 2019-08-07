@@ -10,14 +10,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
+import androidx.core.app.NotificationCompat;
 import android.util.Log;
-
-import com.facebook.react.bridge.Promise;
-import com.facebook.react.bridge.ReadableMap;
-
-import static com.zinspector.foregroundservice.Constants.ERROR_ANDROID_VERSION;
-import static com.zinspector.foregroundservice.Constants.ERROR_INVALID_CONFIG;
 
 
 // partially took ideas from: https://github.com/zo0r/react-native-push-notification/blob/master/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNPushNotificationHelper.java
