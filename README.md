@@ -1,7 +1,7 @@
 # react-native-foreground-service
 Android only foreground service with JS code support
 
-TODO: Write this properly. Migrate to react 60 and androidx
+TODO: Write a proper readme.
 
 Thanks to the following repos to provide ideas and insight about how to do this.
 https://github.com/voximplant/react-native-foreground-service
