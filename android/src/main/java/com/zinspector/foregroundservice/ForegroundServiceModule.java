@@ -55,15 +55,20 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
             return;
         }
 
-        Intent intent = new Intent(getReactApplicationContext(), ForegroundService.class);
-        intent.setAction(Constants.ACTION_FOREGROUND_SERVICE_START);
-        intent.putExtra(NOTIFICATION_CONFIG, Arguments.toBundle(notificationConfig));
-        ComponentName componentName = getReactApplicationContext().startService(intent);
+        try{
+            Intent intent = new Intent(getReactApplicationContext(), ForegroundService.class);
+            intent.setAction(Constants.ACTION_FOREGROUND_SERVICE_START);
+            intent.putExtra(NOTIFICATION_CONFIG, Arguments.toBundle(notificationConfig));
+            ComponentName componentName = getReactApplicationContext().startService(intent);
 
-        if (componentName != null) {
-            promise.resolve(null);
-        } else {
-            promise.reject(ERROR_SERVICE_ERROR, "ForegroundService: Foreground service is not started");
+            if (componentName != null) {
+                promise.resolve(null);
+            } else {
+                promise.reject(ERROR_SERVICE_ERROR, "ForegroundService: Foreground service failed to start.");
+            }
+        }
+        catch(IllegalStateException e){
+            promise.reject(ERROR_SERVICE_ERROR, "ForegroundService: Foreground service failed to start.");
         }
     }
 
@@ -89,15 +94,20 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
             return;
         }
 
-        Intent intent = new Intent(getReactApplicationContext(), ForegroundService.class);
-        intent.setAction(Constants.ACTION_UPDATE_NOTIFICATION);
-        intent.putExtra(NOTIFICATION_CONFIG, Arguments.toBundle(notificationConfig));
-        ComponentName componentName = getReactApplicationContext().startService(intent);
+        try{
+            Intent intent = new Intent(getReactApplicationContext(), ForegroundService.class);
+            intent.setAction(Constants.ACTION_UPDATE_NOTIFICATION);
+            intent.putExtra(NOTIFICATION_CONFIG, Arguments.toBundle(notificationConfig));
+            ComponentName componentName = getReactApplicationContext().startService(intent);
 
-        if (componentName != null) {
-            promise.resolve(null);
-        } else {
-            promise.reject(ERROR_SERVICE_ERROR, "ForegroundService: Update notification failed");
+            if (componentName != null) {
+                promise.resolve(null);
+            } else {
+                promise.reject(ERROR_SERVICE_ERROR, "ForegroundService: Update notification failed.");
+            }
+        }
+        catch(IllegalStateException e){
+            promise.reject(ERROR_SERVICE_ERROR, "ForegroundService: Update notification failed, service failed to start.");
         }
     }
 
@@ -157,17 +167,20 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
             return;
         }
 
-        // TODO: Check if service is running and return error if not.
+        try{
+            Intent intent = new Intent(getReactApplicationContext(), ForegroundService.class);
+            intent.setAction(Constants.ACTION_FOREGROUND_RUN_TASK);
+            intent.putExtra(TASK_CONFIG, Arguments.toBundle(taskConfig));
 
-        Intent intent = new Intent(getReactApplicationContext(), ForegroundService.class);
-        intent.setAction(Constants.ACTION_FOREGROUND_RUN_TASK);
-        intent.putExtra(TASK_CONFIG, Arguments.toBundle(taskConfig));
+            ComponentName componentName = getReactApplicationContext().startService(intent);
 
-        ComponentName componentName = getReactApplicationContext().startService(intent);
-
-        if (componentName != null) {
-            promise.resolve(null);
-        } else {
+            if (componentName != null) {
+                promise.resolve(null);
+            } else {
+                promise.reject(ERROR_SERVICE_ERROR, "ForegroundService: Failed to run task.");
+            }
+        }
+        catch(IllegalStateException e){
             promise.reject(ERROR_SERVICE_ERROR, "ForegroundService: Failed to run task.");
         }
     }
