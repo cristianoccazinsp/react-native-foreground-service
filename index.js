@@ -65,6 +65,8 @@ export default class ForegroundService {
     /**
      * Updates a notification of a running service. Make sure to use the same ID
      * or it will trigger a separate notification.
+     * Note: this method might fail if called right after starting the service
+     * since the service might not be yet ready.
      * @param {NotificationConfig} notificationConfig - Notification config
      * @return Promise
      */
@@ -93,10 +95,22 @@ export default class ForegroundService {
     /**
      * Runs a previously configured headless task.
      * Task must be able to self stop if the service is stopped, since it can't be force killed once started.
+     * Note: This method might silently fail if the service is not running, but will run successfully
+     * if the service is still spinning up.
      * @param {TaskConfig} taskConfig - Notification config
      * @return Promise
      */
     static async runTask(taskConfig) {
         return await ForegroundServiceModule.runTask(taskConfig);
+    }
+
+    /**
+     * Returns an integer indicating if the service is running or not.
+     * The integer represents the internal counter of how many startService
+     * calls were done without calling stopService
+     * @return Promise
+     */
+    static async isRunning() {
+        return await ForegroundServiceModule.isRunning();
     }
 }

@@ -17,18 +17,56 @@ import static com.zinspector.foregroundservice.Constants.TASK_CONFIG;
 
 // NOTE: headless task will still block the UI so don't do heavy work, but this is also good
 // since they will share the JS environment
-// TOOD: The headless task spawned from here seem to have infinite time and no battery blame due to its parent
-// being foreground. Confirm this is the case or we might need the headless Task to call startForeground instead
-// TODO2: Since calls come from a single thread environment, should we synchronize the running flag?
+// Service will also be a singleton in order to quickly find out if it is running
 
 public class ForegroundService extends Service {
 
+    private static ForegroundService mInstance = null;
     private int running = 0;
+
+    public static boolean isServiceCreated(){
+        try{
+            return mInstance != null && mInstance.ping();
+        }
+        catch(NullPointerException e){
+            return false;
+        }
+    }
+
+    public static ForegroundService getInstance(){
+        if(isServiceCreated()){
+            return mInstance;
+        }
+        return null;
+    }
+
+    public int isRunning(){
+        return running;
+    }
+
+    private boolean ping(){
+        return true;
+    }
+
+    @Override
+    public void onCreate() {
+        //Log.e("ForegroundService", "destroy called");
+        running = 0;
+        mInstance = this;
+    }
+
+    @Override
+    public void onDestroy() {
+        //Log.e("ForegroundService", "destroy called");
+        running = 0;
+        mInstance = null;
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -129,6 +167,7 @@ public class ForegroundService extends Service {
             }
             else if (action.equals(Constants.ACTION_FOREGROUND_SERVICE_STOP_ALL)) {
                 running = 0;
+                mInstance = null;
                 stopSelf();
             }
         }
@@ -136,11 +175,6 @@ public class ForegroundService extends Service {
 
     }
 
-    @Override
-    public void onDestroy() {
-        //Log.e("ForegroundService", "destroy called");
-        running = 0;
-    }
 
     public void runHeadlessTask(Bundle bundle){
         final Intent service = new Intent(getApplicationContext(), ForegroundServiceTask.class);

@@ -32,6 +32,16 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
         return "ForegroundService";
     }
 
+    private boolean isRunning(){
+        // Get the ForegroundService running value
+        ForegroundService instance = ForegroundService.getInstance();
+        int res = 0;
+        if(instance != null){
+            res = instance.isRunning();
+        }
+        return res > 0;
+    }
+
 
     @ReactMethod
     public void startService(ReadableMap notificationConfig, Promise promise) {
@@ -95,6 +105,13 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
         }
 
         try{
+
+            // Early check if service is running
+            if(!isRunning()){
+                promise.reject(ERROR_SERVICE_ERROR, "Failed to update notification: Service is not running.");
+                return;
+            }
+
             Intent intent = new Intent(getReactApplicationContext(), ForegroundService.class);
             intent.setAction(Constants.ACTION_UPDATE_NOTIFICATION);
             intent.putExtra(NOTIFICATION_CONFIG, Arguments.toBundle(notificationConfig));
@@ -103,11 +120,11 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
             if (componentName != null) {
                 promise.resolve(null);
             } else {
-                promise.reject(ERROR_SERVICE_ERROR, "ForegroundService: Update notification failed.");
+                promise.reject(ERROR_SERVICE_ERROR, "Update notification failed.");
             }
         }
         catch(IllegalStateException e){
-            promise.reject(ERROR_SERVICE_ERROR, "ForegroundService: Update notification failed, service failed to start.");
+            promise.reject(ERROR_SERVICE_ERROR, "Update notification failed, service failed to start.");
         }
     }
 
@@ -158,16 +175,17 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
     public void runTask(ReadableMap taskConfig, Promise promise) {
 
         if (!taskConfig.hasKey("taskName")) {
-            promise.reject(ERROR_INVALID_CONFIG, "ForegroundService: taskName is required");
+            promise.reject(ERROR_INVALID_CONFIG, "taskName is required");
             return;
         }
 
         if (!taskConfig.hasKey("delay")) {
-            promise.reject(ERROR_INVALID_CONFIG, "ForegroundService: delay is required");
+            promise.reject(ERROR_INVALID_CONFIG, "delay is required");
             return;
         }
 
         try{
+
             Intent intent = new Intent(getReactApplicationContext(), ForegroundService.class);
             intent.setAction(Constants.ACTION_FOREGROUND_RUN_TASK);
             intent.putExtra(TASK_CONFIG, Arguments.toBundle(taskConfig));
@@ -177,12 +195,25 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
             if (componentName != null) {
                 promise.resolve(null);
             } else {
-                promise.reject(ERROR_SERVICE_ERROR, "ForegroundService: Failed to run task.");
+                promise.reject(ERROR_SERVICE_ERROR, "Failed to run task: Service did not start");
             }
         }
         catch(IllegalStateException e){
-            promise.reject(ERROR_SERVICE_ERROR, "ForegroundService: Failed to run task.");
+            promise.reject(ERROR_SERVICE_ERROR, "Failed to run task: Service did not start");
         }
+    }
+
+    @ReactMethod
+    public void isRunning(Promise promise) {
+
+        // Get the ForegroundService running value
+        ForegroundService instance = ForegroundService.getInstance();
+        int res = 0;
+        if(instance != null){
+            res = instance.isRunning();
+        }
+
+        promise.resolve(res);
     }
 
 }
