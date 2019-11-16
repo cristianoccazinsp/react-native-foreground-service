@@ -143,7 +143,13 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
             getReactApplicationContext().startService(intent);
         }
         catch(IllegalStateException e){
-            getReactApplicationContext().stopService(intent);
+            try{
+                getReactApplicationContext().stopService(intent);
+            }
+            catch(Exception e2){
+                promise.reject(ERROR_SERVICE_ERROR, "Service stop failed: " + e2.getMessage());
+                return;
+            }
         }
 
         // Also stop headless tasks, should be noop if it's not running.
@@ -165,7 +171,13 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
             getReactApplicationContext().startService(intent);
         }
         catch(IllegalStateException e){
-            getReactApplicationContext().stopService(intent);
+            try{
+                getReactApplicationContext().stopService(intent);
+            }
+            catch(Exception e2){
+                promise.reject(ERROR_SERVICE_ERROR, "Service stop all failed: " + e2.getMessage());
+                return;
+            }
         }
 
         promise.resolve(null);
