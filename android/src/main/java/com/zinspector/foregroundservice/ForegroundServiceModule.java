@@ -106,12 +106,6 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
 
         try{
 
-            // Early check if service is running
-            if(!isRunning()){
-                promise.reject(ERROR_SERVICE_ERROR, "Failed to update notification: Service is not running.");
-                return;
-            }
-
             Intent intent = new Intent(getReactApplicationContext(), ForegroundService.class);
             intent.setAction(Constants.ACTION_UPDATE_NOTIFICATION);
             intent.putExtra(NOTIFICATION_CONFIG, Arguments.toBundle(notificationConfig));

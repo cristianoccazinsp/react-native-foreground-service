@@ -67,6 +67,7 @@ export default class ForegroundService {
      * or it will trigger a separate notification.
      * Note: this method might fail if called right after starting the service
      * since the service might not be yet ready.
+     * If service is not running, it will be started automatically like calling startService.
      * @param {NotificationConfig} notificationConfig - Notification config
      * @return Promise
      */
@@ -97,6 +98,8 @@ export default class ForegroundService {
      * Task must be able to self stop if the service is stopped, since it can't be force killed once started.
      * Note: This method might silently fail if the service is not running, but will run successfully
      * if the service is still spinning up.
+     * If the service is not running because it was killed, it will be attempted to be started again
+     * using the last notification available.
      * @param {TaskConfig} taskConfig - Notification config
      * @return Promise
      */
