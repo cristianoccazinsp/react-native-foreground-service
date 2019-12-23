@@ -15,6 +15,7 @@ const ForegroundServiceModule = NativeModules.ForegroundService;
  * @property {string} icon - Small icon name | ic_notification
  * @property {string} largeIcon - Large icon name | ic_launcher
  * @property {string} visibility - private | public | secret
+ * @property {boolean} ongoing - true/false if the notification is ongoing. The notification the service was started with will always be ongoing
  * @property {number} [importance] - Importance (and priority for older devices) of this notification. This might affect notification sound One of:
  *                                  none - IMPORTANCE_NONE (by default),
     *                               min - IMPORTANCE_MIN,
@@ -73,6 +74,16 @@ export default class ForegroundService {
      */
     static async updateNotification(notificationConfig) {
         return await ForegroundServiceModule.updateNotification(notificationConfig);
+    }
+
+    /**
+     * Cancels/dimisses a notification given its id. Useful if the service used
+     * more than one notification
+     * @param {number} id - Notification id to cancel
+     * @return Promise
+     */
+    static async cancelNotification(id) {
+        return await ForegroundServiceModule.cancelNotification({id: id});
     }
 
     /**

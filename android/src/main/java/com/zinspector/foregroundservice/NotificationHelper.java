@@ -106,6 +106,7 @@ class NotificationHelper {
             .setVisibility(visibility)
             .setPriority(priority)
             .setContentIntent(pendingIntent)
+            .setOngoing(bundle.getBoolean("ongoing", false))
             .setContentText(bundle.getString("message"));
 
 

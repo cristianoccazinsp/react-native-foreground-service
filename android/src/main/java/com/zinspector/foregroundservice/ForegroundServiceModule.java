@@ -2,6 +2,7 @@ package com.zinspector.foregroundservice;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.app.NotificationManager;
 import android.os.Build;
 import android.util.Log;
 
@@ -119,6 +120,33 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
         }
         catch(IllegalStateException e){
             promise.reject(ERROR_SERVICE_ERROR, "Update notification failed, service failed to start.");
+        }
+    }
+
+    // helper to dismiss a notification. Useful if we used multiple notifications
+    // for our service since stopping the foreground service will only dismiss one notification
+    @ReactMethod
+    public void cancelNotification(ReadableMap notificationConfig, Promise promise) {
+        if (notificationConfig == null) {
+            promise.reject(ERROR_INVALID_CONFIG, "ForegroundService: Notification config is invalid");
+            return;
+        }
+
+        if (!notificationConfig.hasKey("id")) {
+            promise.reject(ERROR_INVALID_CONFIG , "ForegroundService: id is required");
+            return;
+        }
+
+        try{
+            int id = (int)notificationConfig.getDouble("id");
+
+            NotificationManager mNotificationManager=(NotificationManager)this.reactContext.getSystemService(this.reactContext.NOTIFICATION_SERVICE);
+            mNotificationManager.cancel(id);
+
+            promise.resolve(null);
+        }
+        catch(Exception e){
+            promise.reject(ERROR_SERVICE_ERROR, "Failed to cancel notification.");
         }
     }
 
