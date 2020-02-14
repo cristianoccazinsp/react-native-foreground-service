@@ -218,7 +218,7 @@ public class ForegroundService extends Service {
         int delay = (int)bundle.getDouble("delay");
 
         if(delay <= 0){
-             getApplicationContext().startService(service);
+            getApplicationContext().startService(service);
 
             // wakelock should be released automatically by the task
             // Shouldn't be needed, it's called automatically by headless
@@ -231,7 +231,12 @@ public class ForegroundService extends Service {
                     if(running <= 0){
                         return;
                     }
-                    getApplicationContext().startService(service);
+                    try{
+                        getApplicationContext().startService(service);
+                    }
+                    catch (Exception e) {
+                        Log.e("ForegroundService", "Failed to start delayed headless task: " + e.getMessage());
+                    }
                 }
             }, delay);
         }
