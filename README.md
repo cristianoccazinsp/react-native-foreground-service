@@ -59,7 +59,7 @@ https://github.com/zo0r/react-native-push-notification/
         message: `blah message`,
         visibility: 'public',
         importance: 'low',
-        number: String(total)
+        number: String(1)
     };
 
     await ForegroundService.startService(notificationConfig);
