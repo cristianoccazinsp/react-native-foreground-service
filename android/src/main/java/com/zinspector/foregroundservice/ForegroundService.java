@@ -96,6 +96,14 @@ public class ForegroundService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        // in case our service is started with a null intent
+        // something that should technically not happen, but some devices
+        // violate this
+        if(intent == null){
+            return START_NOT_STICKY;
+        }
+
         String action = intent.getAction();
 
         /**

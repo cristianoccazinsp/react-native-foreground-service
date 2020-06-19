@@ -21,6 +21,13 @@ public class ForegroundServiceTask extends HeadlessJsTaskService {
 
     @Nullable
     protected HeadlessJsTaskConfig getTaskConfig(Intent intent) {
+
+        // check null intents that may rarely happen
+        // return null so react knows it should skip this request
+        if(intent == null){
+            return null;
+        }
+
         Bundle extras = intent.getExtras();
 
         return new HeadlessJsTaskConfig(
