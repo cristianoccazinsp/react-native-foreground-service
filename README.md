@@ -1,5 +1,5 @@
 # react-native-foreground-service
-Android only foreground service with JS code support
+Android only foreground service with JS code support, This is a library which can help to run headless js task while your app is in background, such as geolocation update, play music, fetch data, 
 
 TODO: Write a proper readme.
 
@@ -12,8 +12,11 @@ https://github.com/zo0r/react-native-push-notification/
 
     - Add to package.json
     "react-native-foreground-service": "github:cristianoccazinsp/react-native-foreground-service",
-
-    -- NO LONGER NEEDED
+    
+    -- For react native >= 60.0 , autolinking is used  
+    
+    -- For react native previous versions 
+    
     react-native link react-native-foreground-service
 
     Add/configure the following into the AndroidManifest.xml
@@ -21,7 +24,19 @@ https://github.com/zo0r/react-native-push-notification/
     ```
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
+    
+    
+    add a color.xml file in /android/app/src/main/res/values
+    ```
+    <?xml version="1.0" encoding="utf-8"?>
+    <resources>
+    <item  name="orange"  type="color">#FF4500
+    </item>
+    <integer-array  name="androidcolors">
+    <item>@color/orange</item>
+    </integer-array>
+    </resources>
+    ```
 
     <!-- inside application -->
 
@@ -76,3 +91,5 @@ https://github.com/zo0r/react-native-push-notification/
 
 
     ```
+    
+    
