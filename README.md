@@ -91,5 +91,11 @@ https://github.com/zo0r/react-native-push-notification/
 
 
     ```
+
+#   Demo
+    
+    Take Geolocation while the app in Background 
+
+    https://github.com/nahidmbstu/React-Native-Foreground-Service-Demo
     
     
