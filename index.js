@@ -127,4 +127,16 @@ export default class ForegroundService {
     static async isRunning() {
         return await ForegroundServiceModule.isRunning();
     }
+
+    /**
+     * Returns true if background is restricted as provided by
+     * https://developer.android.com/reference/android/app/ActivityManager#isBackgroundRestricted()
+     *
+     * Returns false if restriction cannot be determined due to Android constraints,
+     * only available for SDK >= 28
+     * @return Promise
+     */
+     static async isBackgroundRestricted() {
+        return await ForegroundServiceModule.isBackgroundRestricted();
+    }
 }

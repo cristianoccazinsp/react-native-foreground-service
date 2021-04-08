@@ -1,6 +1,6 @@
 {
   "name": "react-native-foreground-service",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A React Native android module to support launching a foreground service and JS code execution",
   "main": "index.js",
   "scripts": {

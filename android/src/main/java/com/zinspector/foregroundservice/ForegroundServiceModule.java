@@ -1,5 +1,6 @@
 package com.zinspector.foregroundservice;
 
+import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.app.NotificationManager;
@@ -250,4 +251,15 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
         promise.resolve(res);
     }
 
+    @ReactMethod
+    public void isBackgroundRestricted(Promise promise) {
+        ActivityManager activityManager = (ActivityManager)this.reactContext.getSystemService(this.reactContext.ACTIVITY_SERVICE);
+        Boolean restricted = false;
+
+        if (activityManager != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            restricted = activityManager.isBackgroundRestricted();
+        }
+
+        promise.resolve(restricted);
+    }
 }
