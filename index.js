@@ -45,7 +45,8 @@ export default class ForegroundService {
      * NOTE: This must be called before anything else, or the service will fail.
      * NOTE2: Registration must also happen at module level (not at mount)
      * task will receive all parameters from runTask
-     * @param {task} async function to be called
+     * @param {string} taskName task name that should match
+     * @param {function} task async function to be called
      */
     static registerForegroundTask(taskName, task) {
         AppRegistry.registerHeadlessTask(taskName, () => task);
