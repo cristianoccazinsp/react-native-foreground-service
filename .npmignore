@@ -1,0 +1,11 @@
+example
+ios/build
+android/build
+android/.gradle
+android/.idea
+.idea
+.DS_Store
+.gitattributes
+scripts
+local.properties
+*.iml
