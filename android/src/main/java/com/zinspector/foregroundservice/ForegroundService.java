@@ -233,7 +233,7 @@ public class ForegroundService extends Service {
             //HeadlessJsTaskService.acquireWakeLockNow(getApplicationContext());
         }
         else{
-            new Handler().postDelayed(new Runnable() {
+            new Handler(Looper.getMainLooper()).postDelayed.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     if(running <= 0){
