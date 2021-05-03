@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.facebook.react.HeadlessJsTaskService;
@@ -233,7 +234,7 @@ public class ForegroundService extends Service {
             //HeadlessJsTaskService.acquireWakeLockNow(getApplicationContext());
         }
         else{
-            new Handler(Looper.getMainLooper()).postDelayed.postDelayed(new Runnable() {
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     if(running <= 0){
