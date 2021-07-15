@@ -80,7 +80,7 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
             }
         }
         catch(IllegalStateException e){
-            promise.reject(ERROR_SERVICE_ERROR, "ForegroundService: Foreground service failed to start.");
+            promise.reject(ERROR_SERVICE_ERROR, "ForegroundService: Foreground service failed to start (" + e.getMessage() + ").", e);
         }
     }
 
@@ -120,7 +120,7 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
             }
         }
         catch(IllegalStateException e){
-            promise.reject(ERROR_SERVICE_ERROR, "Update notification failed, service failed to start.");
+            promise.reject(ERROR_SERVICE_ERROR, "Update notification failed, service failed to start (" + e.getMessage() + ").", e);
         }
     }
 
@@ -147,7 +147,7 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
             promise.resolve(null);
         }
         catch(Exception e){
-            promise.reject(ERROR_SERVICE_ERROR, "Failed to cancel notification.");
+            promise.reject(ERROR_SERVICE_ERROR, "Failed to cancel notification.", e);
         }
     }
 
@@ -170,7 +170,7 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
                 getReactApplicationContext().stopService(intent);
             }
             catch(Exception e2){
-                promise.reject(ERROR_SERVICE_ERROR, "Service stop failed: " + e2.getMessage());
+                promise.reject(ERROR_SERVICE_ERROR, "Service stop failed: " + e2.getMessage(), e2);
                 return;
             }
         }
@@ -198,7 +198,7 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
                 getReactApplicationContext().stopService(intent);
             }
             catch(Exception e2){
-                promise.reject(ERROR_SERVICE_ERROR, "Service stop all failed: " + e2.getMessage());
+                promise.reject(ERROR_SERVICE_ERROR, "Service stop all failed: " + e2.getMessage(), e2);
                 return;
             }
         }
@@ -230,11 +230,11 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
             if (componentName != null) {
                 promise.resolve(null);
             } else {
-                promise.reject(ERROR_SERVICE_ERROR, "Failed to run task: Service did not start");
+                promise.reject(ERROR_SERVICE_ERROR, "Failed to run task: Service did not start (component null).");
             }
         }
         catch(IllegalStateException e){
-            promise.reject(ERROR_SERVICE_ERROR, "Failed to run task: Service did not start");
+            promise.reject(ERROR_SERVICE_ERROR, "Failed to run task: Service did not start (" + e.getMessage() + ").", e);
         }
     }
 
