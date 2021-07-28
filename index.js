@@ -1,10 +1,11 @@
-import {NativeModules, AppRegistry} from 'react-native';
+import {NativeModules, NativeEventEmitter, AppRegistry} from 'react-native';
 
 // ANDROID ONLY
 // Copied and adapted from https://github.com/voximplant/react-native-foreground-service
 // and https://github.com/zo0r/react-native-push-notification/
 
 const ForegroundServiceModule = NativeModules.ForegroundService;
+const ForegroundServiceEmitter = ForegroundServiceModule ? new NativeEventEmitter(ForegroundServiceModule) : null;
 
 /**
  * @property {number} id - Unique notification id
@@ -134,5 +135,23 @@ export default class ForegroundService {
    */
   static async isBackgroundRestricted() {
     return await ForegroundServiceModule.isBackgroundRestricted();
+  }
+
+  /**
+   * Fires the callback function when the service onDestroy
+   * is called on the native side.  This may not always be called
+   * so it cannot be fully relied on.
+   *
+   * Returns an object that has `.remove()` to remove the listener or null
+   * if the emitter is not available.
+   */
+  static onDestroy(callback) {
+    if (!ForegroundServiceEmitter) {
+      return null;
+    }
+
+    return ForegroundServiceEmitter.addListener('ForegroundService.onDestroy', (data) => {
+      callback(data);
+    });
   }
 }
