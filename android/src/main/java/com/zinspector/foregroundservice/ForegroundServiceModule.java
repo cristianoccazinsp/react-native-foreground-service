@@ -190,17 +190,13 @@ public class ForegroundServiceModule extends ReactContextBaseJavaModule {
         Intent intent = new Intent(getReactApplicationContext(), ForegroundService.class);
         intent.setAction(Constants.ACTION_FOREGROUND_SERVICE_STOP_ALL);
 
-        try{
-            getReactApplicationContext().startService(intent);
+        try {
+            //getReactApplicationContext().startService(intent);
+            getReactApplicationContext().stopService(intent);
         }
-        catch(IllegalStateException e){
-            try{
-                getReactApplicationContext().stopService(intent);
-            }
-            catch(Exception e2){
-                promise.reject(ERROR_SERVICE_ERROR, "Service stop all failed: " + e2.getMessage(), e2);
-                return;
-            }
+        catch(Exception e){
+            promise.reject(ERROR_SERVICE_ERROR, "Service stop all failed: " + e.getMessage(), e);
+            return;
         }
 
         promise.resolve(null);
