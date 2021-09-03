@@ -5,7 +5,9 @@ import {NativeModules, NativeEventEmitter, AppRegistry} from 'react-native';
 // and https://github.com/zo0r/react-native-push-notification/
 
 const ForegroundServiceModule = NativeModules.ForegroundService;
-const ForegroundServiceEmitter = ForegroundServiceModule ? new NativeEventEmitter(ForegroundServiceModule) : null;
+const ForegroundServiceEmitter = ForegroundServiceModule
+  ? new NativeEventEmitter(ForegroundServiceModule)
+  : null;
 
 /**
  * @property {number} id - Unique notification id
@@ -150,8 +152,11 @@ export default class ForegroundService {
       return null;
     }
 
-    return ForegroundServiceEmitter.addListener('ForegroundService.onDestroy', (data) => {
-      callback(data);
-    });
+    return ForegroundServiceEmitter.addListener(
+      'ForegroundService.onDestroy',
+      (data) => {
+        callback(data);
+      },
+    );
   }
 }
