@@ -3,7 +3,7 @@ module.exports = {
   extends: '@react-native-community',
   settings: {
     react: {
-      version: '16',
+      version: '17',
     },
   },
   rules: {
