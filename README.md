@@ -74,6 +74,7 @@ https://github.com/zo0r/react-native-push-notification/
         message: `blah message`,
         visibility: 'public',
         importance: 'low',
+        time: true,
         number: String(1)
     };
 

@@ -17,6 +17,7 @@ const ForegroundServiceEmitter = ForegroundServiceModule
  * @property {string} icon - Small icon name | ic_notification
  * @property {string} largeIcon - Large icon name | ic_launcher
  * @property {string} visibility - private | public | secret
+ * @property {string} time - Show time on notification | false
  * @property {boolean} ongoing - true/false if the notification is ongoing. The notification the service was started with will always be ongoing
  * @property {number} [importance] - Importance (and priority for older devices) of this notification. This might affect notification sound One of:
  *                                  none - IMPORTANCE_NONE (by default),
