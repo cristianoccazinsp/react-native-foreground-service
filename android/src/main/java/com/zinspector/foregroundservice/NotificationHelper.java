@@ -149,6 +149,8 @@ class NotificationHelper {
             }
         }
 
+        notificationBuilder.setShowWhen(bundle.getBoolean("time"));
+
         return notificationBuilder.build();
     }
 
