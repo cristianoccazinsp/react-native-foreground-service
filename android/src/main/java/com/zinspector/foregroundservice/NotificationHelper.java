@@ -124,7 +124,7 @@ class NotificationHelper {
 
         String iconName = bundle.getString("icon");
         if(iconName == null){
-            iconName = "ic_notification";
+            iconName = "ic_launcher";
         }
         notificationBuilder.setSmallIcon(getResourceIdForResourceName(context, iconName));
 

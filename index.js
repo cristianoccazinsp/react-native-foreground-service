@@ -14,7 +14,7 @@ const ForegroundServiceEmitter = ForegroundServiceModule
  * @property {string} title - Notification title
  * @property {string} message - Notification message
  * @property {string} number - int specified as string > 0, for devices that support it, this might be used to set the badge counter
- * @property {string} icon - Small icon name | ic_notification
+ * @property {string} icon - Small icon name | ic_launcher
  * @property {string} largeIcon - Large icon name | ic_launcher
  * @property {string} visibility - private | public | secret
  * @property {boolean} ongoing - true/false if the notification is ongoing. The notification the service was started with will always be ongoing
