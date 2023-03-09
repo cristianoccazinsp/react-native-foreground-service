@@ -107,13 +107,15 @@ class NotificationHelper {
         checkOrCreateChannel(mNotificationManager, bundle);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
-            .setContentTitle(title)
             .setVisibility(visibility)
             .setPriority(priority)
             .setContentIntent(pendingIntent)
             .setOngoing(bundle.getBoolean("ongoing", false))
             .setContentText(bundle.getString("message"));
 
+        if (!title.equals("")) {
+            notificationBuilder.setContentTitle(title);
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             notificationBuilder.setColor(this.config.getNotificationColor());
